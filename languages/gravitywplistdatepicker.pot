@@ -1,0 +1,124 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: GravityWP - List Datepicker\n"
+"POT-Creation-Date: 2022-09-30 16:33+0200\n"
+"PO-Revision-Date: 2022-09-30 15:46+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: listdatepicker.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#: includes/class-list-datepicker.php:301
+msgid "Datepicker fields"
+msgstr ""
+
+#: includes/class-list-datepicker.php:302
+msgid ""
+"Place a tick next to the column name to make it a date picker field. Select "
+"the date format from the 'Date Format' options."
+msgstr ""
+
+#: includes/class-list-datepicker.php:303
+#: includes/templates/gwp-list-datepicker-field-settings.php:5
+msgid "Make Datepicker"
+msgstr ""
+
+#: includes/class-list-datepicker.php:304
+#: includes/templates/gwp-list-datepicker-field-settings.php:9
+msgid "Date Format"
+msgstr ""
+
+#: includes/class-list-datepicker.php:305
+#: includes/templates/gwp-list-datepicker-field-settings.php:21
+msgid "No Icon"
+msgstr ""
+
+#: includes/class-list-datepicker.php:306
+#: includes/templates/gwp-list-datepicker-field-settings.php:23
+msgid "Calendar Icon"
+msgstr ""
+
+#: includes/class-list-datepicker.php:307
+#: includes/templates/gwp-list-datepicker-field-settings.php:26
+msgid "Default Date"
+msgstr ""
+
+#: includes/class-list-datepicker.php:488
+#, php-format
+msgid "The column '%1$s' requires a valid date in %2$s format."
+msgstr ""
+
+#. translators: argument is a date format, like mm/dd/yyyy.
+#: includes/class-list-datepicker.php:537
+#, php-format
+msgid "Requires a valid date in %s format."
+msgstr ""
+
+#: includes/class-list-datepicker.php:628
+#: includes/templates/gwp-list-datepicker-field-settings.php:2
+msgid "Datepicker"
+msgstr ""
+
+#: includes/class-list-datepicker.php:628
+msgid "Makes list field column a datepicker."
+msgstr ""
+
+#: lib/gravitywp/license-handler/src/LicenseHandler.php:130
+#, php-format
+msgid ""
+"Your %1$s license has not been actived. This means you are missing out on "
+"security fixes, updates and support.%2$sActivate your license%3$s or %4$sget "
+"a license here%5$s"
+msgstr ""
+
+#: lib/gravitywp/license-handler/src/LicenseHandler.php:159
+msgid "Enter the license key you received after purchasing the plugin."
+msgstr ""
+
+#: lib/gravitywp/license-handler/src/LicenseHandler.php:160
+msgid "License Key"
+msgstr ""
+
+#: lib/gravitywp/license-handler/src/LicenseHandler.php:168
+msgid "Invalid or expired license"
+msgstr ""
+
+#: lib/gravitywp/license-handler/src/LicenseHandler.php:172
+msgid ""
+"To unlock plugin updates and support, please enter your license key below"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "GravityWP - List Datepicker"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://gravitywp.com/add-on/list-datepicker"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Adds a datepicker input to the Gravity Forms List field."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "GravityWP"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://gravitywp.com"
+msgstr ""

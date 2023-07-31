@@ -1,0 +1,38 @@
+{
+    "require": {
+        "gravitywp/license-handler": "^1.0"
+    },
+    "extra": {
+        "strauss": {
+            "target_directory": "lib",
+            "namespace_prefix": "GravityWP\\GravityWP_List_Datepicker\\",
+            "classmap_prefix": "GravityWP_List_Datepicker",
+            "constant_prefix": "GWP_LDP",
+            "packages": [
+            ],
+            "override_autoload": {
+            },
+            "exclude_from_copy": {
+                "packages": [
+                ],
+                "namespaces": [
+                ],
+                "file_patterns": [
+                ]
+            },
+            "exclude_from_prefix": {
+                "packages": [
+                ],
+                "namespaces": [
+                ],
+                "file_patterns": [
+                    "/^psr.*$/"
+                ]
+            },
+            "namespace_replacement_patterns" : {
+            },
+            "delete_vendor_files": false
+        }
+    }
+
+}

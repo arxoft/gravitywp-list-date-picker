@@ -1,0 +1,90 @@
+{
+    "packages": [
+        {
+            "name": "appsero/client",
+            "version": "v1.2.2",
+            "version_normalized": "1.2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Appsero/client.git",
+                "reference": "5f9a275cdd94d756d2f5b05d9281719c6d638561"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Appsero/client/zipball/5f9a275cdd94d756d2f5b05d9281719c6d638561",
+                "reference": "5f9a275cdd94d756d2f5b05d9281719c6d638561",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "time": "2022-12-15T06:49:01+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Appsero\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tareq Hasan",
+                    "email": "tareq@appsero.com"
+                }
+            ],
+            "description": "Appsero Client",
+            "keywords": [
+                "analytics",
+                "plugin",
+                "theme",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/Appsero/client/issues",
+                "source": "https://github.com/Appsero/client/tree/v1.2.2"
+            },
+            "install-path": "../appsero/client"
+        },
+        {
+            "name": "gravitywp/license-handler",
+            "version": "v1.0.20",
+            "version_normalized": "1.0.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gravitywpcom/gravitywp-licence-handler.git",
+                "reference": "1f4ba540b65059061dd316e2800144cff1563064"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gravitywpcom/gravitywp-licence-handler/zipball/1f4ba540b65059061dd316e2800144cff1563064",
+                "reference": "1f4ba540b65059061dd316e2800144cff1563064",
+                "shasum": ""
+            },
+            "require": {
+                "appsero/client": "^1.2",
+                "php": ">=7.0"
+            },
+            "time": "2022-12-16T11:32:26+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "GravityWP\\LicenseHandler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Handles Appsero licenses for Gravity Forms Addons",
+            "support": {
+                "issues": "https://github.com/gravitywpcom/gravitywp-licence-handler/issues",
+                "source": "https://github.com/gravitywpcom/gravitywp-licence-handler/tree/v1.0.20"
+            },
+            "install-path": "../gravitywp/license-handler"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

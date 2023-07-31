@@ -1,0 +1,16 @@
+/* make room for the datepicker icon */
+.gform_wrapper .ginput_container.ginput_container_list .ginput_container_list_date{
+	input.list_datepicker.datepicker_with_icon {
+		width: calc( 100% - 32px );
+	}
+	img.ui-datepicker-trigger {
+		display: inline-block;
+		margin-left: 12.8px;
+		max-height: 25.6px;
+		max-width: 25.6px;
+	}
+}
+/* Fix for GF 2.6.7 displaying legacy background for datepicker UI*/
+.gform-theme-datepicker:not(.gform-legacy-datepicker) .ui-datepicker-header{
+	background-color: unset;
+}
