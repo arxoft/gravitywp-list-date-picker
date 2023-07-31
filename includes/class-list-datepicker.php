@@ -9,6 +9,7 @@ namespace GravityWP\GravityWP_List_Datepicker;
 
 defined( 'ABSPATH' ) || die();
 
+use DateTime;
 use GF_Field;
 use GFAPI;
 use GFCommon;
@@ -515,13 +516,18 @@ class List_Datepicker extends GFAddOn {
 					}
 				} elseif ( true == $field->isDatePicker ) {
 					$default_format = apply_filters( 'itsg_list_field_datepicker_default_format', 'mdy', $form['id'], $field['id'], 1 );
-					$date_format    = '' !== $field->isDatePickerFormat ? $field['isDatePickerFormat'] : $default_format;
+					$date_format    = '' !== $field->isDatePickerFormat  ? $field['isDatePickerFormat'] : $default_format;
+					$min_date_mdy   = '' !== $field->isDatePickerMinDate ? $field['isDatePickerMinDate'] : '';
+					$max_date_mdy   = '' !== $field->isDatePickerMaxDate ? $field['isDatePickerMaxDate'] : '';
+					
 					$value          = rgpost( "input_{$field->id}" );
 					if ( is_array( $value ) ) {
 						foreach ( $value as $key => $column_value ) {
 							$value = $column_value;
 							if ( ! empty( $value ) ) {
-								$date = GFCommon::parse_date( $value, $date_format );
+								$date = GFCommon::parse_date( $value, $date_format ); 
+
+								// Validate the date format
 								if ( empty( $date ) || ! $this->checkdate( $date['month'], $date['day'], $date['year'] ) ) {
 									$validation_result['is_valid'] = false; // set the form validation to false.
 									$field->failed_validation      = true;
@@ -553,6 +559,34 @@ class List_Datepicker extends GFAddOn {
 									$message                   = sprintf( esc_html__( 'Requires a valid date in %s format.', 'gravitywplistdatepicker' ), $format_name );
 									$field->validation_message = $message;
 								}
+
+								// Validate the date range
+								if(!$field->failed_validation && ($min_date_mdy || $max_date_mdy)) {
+									
+									// Prepare DateTime objects for comparison
+									$base_date = new DateTime();
+									$base_date->setDate($date['year'],$date['month'], $date['day']); 
+									$min_date = $min_date_mdy ? DateTime::createFromFormat('m/d/Y', $min_date_mdy) : '';
+									$max_date = $max_date_mdy ? DateTime::createFromFormat('m/d/Y', $max_date_mdy) : '';
+
+									// Set times of all dates to 0:0:0 in-case it's a valid DateTime object 
+									$base_date = $base_date ? $base_date->setTime(0,0,0) : '';
+									$min_date = $min_date ? $min_date->setTime(0,0,0) : '';
+									$max_date = $max_date ? $max_date->setTime(0,0,0) : '';
+									
+									if(!$this->is_date_in_range($base_date, $min_date, $max_date)) {
+
+										$message  = esc_html__( 'The date must be' , 'gravitywplistdatepicker' );
+										$message .= ($min_date_mdy)                  ? sprintf( esc_html__( ' after %s ' , 'gravitywplistdatepicker' ), $min_date_mdy) : '';
+										$message .= ($min_date_mdy && $max_date_mdy) ? esc_html__( ' and ' , 'gravitywplistdatepicker' ) : '';
+										$message .= ($max_date_mdy)                  ? sprintf( esc_html__( ' before %s ' , 'gravitywplistdatepicker' ), $max_date_mdy) : '';
+
+										$validation_result['is_valid'] = false; // set the form validation to false.
+										$field->failed_validation      = true;
+										$field->validation_message     = $message;
+									}
+								}
+
 							}
 						}
 					}
@@ -620,6 +654,10 @@ class List_Datepicker extends GFAddOn {
 				foreach ( $field->choices as $choice ) {
 					if ( $text == rgar( $choice, 'text' ) && true == rgar( $choice, 'isDatePicker' ) ) {
 						$default_date = esc_html( GFCommon::replace_variables_prepopulate( rgar( $choice, 'isDatePickerDefaultDate', '' ) ) );
+
+						$min_date = esc_html( GFCommon::replace_variables_prepopulate( rgar( $choice, 'isDatePickerMinDate', '' ) ) );
+						$max_date = esc_html( GFCommon::replace_variables_prepopulate( rgar( $choice, 'isDatePickerMaxDate', '' ) ) );
+
 						if ( $default_date !== '' ) {
 							// add default date if value is empty.
 							$input = str_replace( "value='' ", "value='{$default_date}' data-default-date='{$default_date}' ", $input );
@@ -629,6 +667,17 @@ class List_Datepicker extends GFAddOn {
 							$default_date = $this->get_date_format( rgar( $choice, 'isDatePickerFormat' ) );
 							$input  = str_replace( '<input ', "<input placeholder='$default_date' ", $input );
 						}						
+
+						// Min Date
+						if($min_date) {
+							$input = str_replace("<input", "<input data-min-date='{$min_date}' ", $input );
+						}
+
+						// Max Date
+						if($max_date) {
+							$input = str_replace("<input", "<input data-max-date='{$max_date}' ", $input );
+						}
+
 						$default_format   = apply_filters( 'itsg_list_field_datepicker_default_format', 'mdy', $form_id, $field_id, $column_number );
 						$date_format      = '' !== rgar( $choice, 'isDatePickerFormat' ) ? $choice['isDatePickerFormat'] : esc_html( $default_format );
 						$datepicker_class = 'itsg_list_field_datepicker_icon_none' == rgar( $choice, 'isDatePickerIcon' ) ? 'datepicker_no_icon' : 'datepicker_with_icon gdatepicker_with_icon';
@@ -649,6 +698,9 @@ class List_Datepicker extends GFAddOn {
 			} else {
 				if ( true == $field->isDatePicker ) {
 					$default_date = esc_html( GFCommon::replace_variables_prepopulate( rgar( $field, 'isDatePickerDefaultDate', '' ) ) );
+					$min_date = esc_html( GFCommon::replace_variables_prepopulate( rgar( $field, 'isDatePickerMinDate', '' ) ) );
+					$max_date = esc_html( GFCommon::replace_variables_prepopulate( rgar( $field, 'isDatePickerMaxDate', '' ) ) );
+
 					if ( $default_date !== '' ) {
 						// add default date if value is empty.
 						$input = str_replace( "value='' ", "value='{$default_date}' data-default-date='{$default_date}' ", $input );
@@ -658,6 +710,17 @@ class List_Datepicker extends GFAddOn {
 						$default_date = $this->get_date_format( rgar( $field, 'isDatePickerFormat' ) );
 						$input  = str_replace( '<input ', "<input placeholder='$default_date' ", $input );
 					}
+
+					// Min Date
+					if($min_date) {
+						$input = str_replace("<input", "<input data-min-date='{$min_date}' ", $input );
+					}
+
+					// Max Date
+					if($max_date) {
+						$input = str_replace("<input", "<input data-max-date='{$max_date}' ", $input );
+					}
+
 					$default_format   = apply_filters( 'itsg_list_field_datepicker_default_format', 'mdy', $form_id, $field_id, 1 );
 					$date_format      = '' !== $field->isDatePickerFormat ? $field['isDatePickerFormat'] : esc_html( $default_format );
 					$datepicker_class = $field->isDatePickerIcon === 'itsg_list_field_datepicker_icon_none' ? 'datepicker_no_icon datepicker' : 'datepicker_with_icon gdatepicker_with_icon';
@@ -715,6 +778,28 @@ class List_Datepicker extends GFAddOn {
 		}
 
 		return checkdate( (int) $month, (int) $day, (int) $year );
+	}
+
+
+
+
+	/**
+	 * Validates if date is greater than Min, or lower than Max, or between Min and Max.
+	 *
+	 * @param object $date Date to check in range. It must be a DateTime() object.
+	 * @param object $min_date Minimum allowed date. It must be a DateTime() object.
+	 * @param object $max_date Maximum allowed date. It must be a DateTime() object.
+	 * @return bool
+	 */
+	function is_date_in_range($date, $min_date, $max_date) {
+
+		if(!$date) return false;
+		if(!$min_date && !$max_date) return false;
+		
+		if($min_date && $max_date) return $date >= $min_date && $date <= $max_date;
+		if($min_date) return $date >= $min_date;
+		if($max_date) return $date <= $max_date;
+		
 	}
 
 	/**
