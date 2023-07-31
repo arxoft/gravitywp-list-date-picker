@@ -25,5 +25,16 @@
 		<br>
 		<label for='list_choice_defaultdate_single'><?php esc_html_e( 'Default Date', 'gravitywplistdatepicker' ); ?></label>
 		<input type='text' value="" class='datepicker_defaultdate' id='list_choice_defaultdate_single' onblur="GWPListDatepicker.updateDatepickerSettings( 'list', 'single' );">
+
+		<!-- Min Date -->
+		<br>
+		<label for='list_choice_mindate_single'><?php esc_html_e('Min Date', 'gravitywplistdatepicker'); ?></label>
+		<input type='text' value="" class='datepicker_mindate' id='list_choice_mindate_single' onblur="GWPListDatepicker.updateDatepickerSettings( 'list', 'single' );">
+
+		<!-- Max Date -->
+		<br>
+		<label for='list_choice_maxdate_single'><?php esc_html_e('Max Date', 'gravitywplistdatepicker'); ?></label>
+		<input type='text' value="" class='datepicker_maxdate' id='list_choice_maxdate_single' onblur="GWPListDatepicker.updateDatepickerSettings( 'list', 'single' );">
+
 	</div>
 </li>

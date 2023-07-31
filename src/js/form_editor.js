@@ -24,7 +24,10 @@
 				const isDatePicker = ( typeof field.choices[ i ].isDatePicker !== 'undefined' && field.choices[ i ].isDatePicker ) ? 'checked' : '';
 				const columnLabel = ( typeof field.choices[ i ].value !== 'undefined' ) ? String( field.choices[ i ].value ) : field.choices[ i ].text;
 				const isDatePickerDefaultDate = typeof field.choices[ i ].isDatePickerDefaultDate !== 'undefined' ? field.choices[ i ].isDatePickerDefaultDate : '';
-				str += GWPListDatepicker.getSettingTemplate( i, inputType, columnLabel, isDatePicker, isDatePickerDefaultDate );
+				const isDatePickerMinDate = typeof field.choices[ i ].isDatePickerMinDate !== 'undefined' ? field.choices[ i ].isDatePickerMinDate : '';
+				const isDatePickerMaxDate = typeof field.choices[ i ].isDatePickerMaxDate !== 'undefined' ? field.choices[ i ].isDatePickerMaxDate : '';
+
+				str += GWPListDatepicker.getSettingTemplate( i, inputType, columnLabel, isDatePicker, isDatePickerDefaultDate, isDatePickerMinDate, isDatePickerMaxDate);
 			}
 		}
 		// work around to ensure icon is displayed - GF is in the habit of hiding the icon just after selecting the field.
@@ -104,6 +107,9 @@
 				$( '#' + inputType + '_choice_datepicker_' + index ).prop( 'checked', Boolean( rgar( field, 'isDatePicker' ) ) );
 				$( '#' + inputType + '_choice_datepickerformat_' + index ).val( rgar( field, 'isDatePickerFormat' ) );
 				$( '#' + inputType + '_choice_defaultdate_' + index ).val( rgar( field, 'isDatePickerDefaultDate' ) );
+				$( '#' + inputType + '_choice_mindate_' + index ).val( rgar( field, 'isDatePickerMinDate' ) );
+				$( '#' + inputType + '_choice_maxdate_' + index ).val( rgar( field, 'isDatePickerMaxDate' ) );
+
 				let icon_value = rgar( field, 'isDatePickerIcon' );
 				icon_value = icon_value === '' ? 'itsg_list_field_datepicker_icon_none' : icon_value;
 				$( 'input:radio[name="list_field_datepicker_icon_' + index + '"]' ).filter( '[value=' + icon_value + ']' ).prop( 'checked', true );
@@ -124,12 +130,16 @@
 				const isDatePickerFormat = $( '#' + inputType + '_choice_datepickerformat_' + index ).val();
 				const isDatePickerIcon = $( 'input:radio[name=' + inputType + '_field_datepicker_icon_' + index + ']:checked' ).val();
 				const isDatePickerDefaultDate = $( '#' + inputType + '_choice_defaultdate_' + index ).val();
+				const isDatePickerMinDate = $( '#' + inputType + '_choice_mindate_' + index ).val();
+				const isDatePickerMaxDate = $( '#' + inputType + '_choice_maxdate_' + index ).val();
 
 				if ( index === 'single' ) {
 					field.isDatePicker = isDatePicker;
 					field.isDatePickerFormat = isDatePickerFormat;
 					field.isDatePickerIcon = isDatePickerIcon;
 					field.isDatePickerDefaultDate = isDatePickerDefaultDate;
+					field.isDatePickerMinDate = isDatePickerMinDate;
+					field.isDatePickerMaxDate = isDatePickerMaxDate;
 				} else {
 					field.choices[ index ].isDatePicker = isDatePicker;
 					field.choices[ index ].isDatePickerFormat = isDatePickerFormat;
@@ -172,7 +182,7 @@
 			}
 		};
 
-		self.getSettingTemplate = function( i, inputType, columnLabel, isDatePicker, isDatePickerDefaultDate ) {
+		self.getSettingTemplate = function( i, inputType, columnLabel, isDatePicker, isDatePickerDefaultDate, isDatePickerMinDate, isDatePickerMaxDate ) {
 			let str = '';
 			if ( i === 0 ) {
 				str += '<p><strong>' + gwp_listdatepicker_admin_js_settings.text_datepicker_title + '</strong><br>' + gwp_listdatepicker_admin_js_settings.text_datepicker_instructions + '</p>';
@@ -202,6 +212,19 @@
 			str += "<label for='" + inputType + '_choice_defaultdate_' + i + "'>";
 			str += '' + gwp_listdatepicker_admin_js_settings.text_default_date + '</label>';
 			str += "<input type='text' value=\"" + isDatePickerDefaultDate.replace( /"/g, '&quot;' ) + "\" class='choice_datepickerdefaultdate' id='" + inputType + '_choice_defaultdate_' + i + "' onblur=\"GWPListDatepicker.updateDatepickerSettings( '" + inputType + "', " + i + ' );">';
+
+			// Min Date
+			str += '<br>';
+			str += "<label for='" + inputType + '_choice_mindate_' + i + "'>";
+			str += '' + gwp_listdatepicker_admin_js_settings.text_min_date + '</label>';
+			str += "<input type='text' value=\"" + isDatePickerMinDate.replace( /"/g, '&quot;' ) + "\" class='choice_datepickermindate' id='" + inputType + '_choice_mindate_' + i + "' onblur=\"GWPListDatepicker.updateDatepickerSettings( '" + inputType + "', " + i + ' );">';
+
+			// Max Date
+			str += '<br>';
+			str += "<label for='" + inputType + '_choice_maxdate_' + i + "'>";
+			str += '' + gwp_listdatepicker_admin_js_settings.text_max_date + '</label>';
+			str += "<input type='text' value=\"" + isDatePickerMaxDate.replace( /"/g, '&quot;' ) + "\" class='choice_datepickermaxdate' id='" + inputType + '_choice_maxdate_' + i + "' onblur=\"GWPListDatepicker.updateDatepickerSettings( '" + inputType + "', " + i + ' );">';
+
 			str += '</div>';
 			str += '</div>';
 			return str;
