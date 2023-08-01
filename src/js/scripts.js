@@ -53,11 +53,7 @@ jQuery( document ).bind( 'gform_post_render', function( $ ) {
 	gformInitDatepicker();
 
 	// Apply min date and max date limit on existing date pickers
-<<<<<<< HEAD
 	jQuery.each(jQuery('input.datepicker'), function() {
-=======
-	jQuery.each(jQuery('.datepicker'), function() {
->>>>>>> 820fba03707bc109b5a24ddb8a16c082c35e9292
 		gwp_maybe_apply_min_max_on_datepicker(this);
 	});
 
